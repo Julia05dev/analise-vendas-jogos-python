@@ -1,34 +1,79 @@
-# Análise Estatística de Vendas de Jogos
+# Análise de Vendas de Jogos
 
-Projeto acadêmico desenvolvido em Python para análise exploratória e visualização interativa de dados de vendas de jogos.
+Projeto desenvolvido em Python com Streamlit para análise exploratória e inferencial de vendas de jogos eletrônicos a partir do dataset `vgsales.csv`.
 
-## Sobre o projeto
+O objetivo principal é investigar quais jogos e gêneros apresentam maiores vendas por região e verificar, por meio de teste estatístico, se as diferenças entre gêneros e regiões são estatisticamente relevantes.
 
-A aplicação permite explorar um conjunto de dados de vendas de jogos por meio de filtros, tabelas e gráficos interativos.
+---
 
-O objetivo foi aplicar conceitos de estatística, análise de dados e visualização de informações em uma aplicação web simples.
+## Objetivo da análise
 
-## Funcionalidades
+A pergunta central do projeto é:
 
-- Leitura e tratamento de dataset
-- Filtros interativos
-- Visualização de dados em tabelas
-- Gráficos dinâmicos
-- Análise de vendas por gênero, região e outros critérios
-- Interface web com Streamlit
+> Quais jogos e gêneros apresentam maiores vendas por região? As diferenças entre gêneros e regiões são estatisticamente relevantes?
+
+Para responder a essa pergunta, o projeto combina:
+
+- análise exploratória dos dados;
+- visualizações interativas;
+- filtros por empresa, jogo e período;
+- comparação de vendas por gênero e região;
+- teste estatístico ANOVA de dois fatores.
+
+---
 
 ## Tecnologias utilizadas
 
 - Python
-- Pandas
 - Streamlit
-- Plotly
-- Análise exploratória de dados
+- Pandas
+- NumPy
+- Plotly Express
+- Statsmodels
 
-## Objetivo acadêmico
+---
 
-O projeto foi desenvolvido como trabalho de estatística, com foco em interpretar dados, identificar padrões e apresentar informações de forma visual e interativa.
+## Funcionalidades
 
-## Observação
+O aplicativo permite:
 
-Este projeto representa uma experiência prática com Python e análise de dados. Este trabalho demonstra capacidade de adaptação e aprendizado de novas ferramentas quando necessário.
+- carregar e tratar automaticamente o dataset `vgsales.csv`;
+- filtrar os dados por:
+  - publisher;
+  - nome do jogo;
+  - intervalo de anos;
+  - medida-resumo;
+- visualizar os 10 jogos mais vendidos globalmente;
+- comparar vendas por gênero e região;
+- consultar uma tabela-resumo por gênero;
+- executar ANOVA de dois fatores;
+- interpretar automaticamente os p-valores;
+- tratar separadamente o problema das vendas digitais a partir de 2008.
+
+---
+
+## Sobre o tratamento dos dados
+
+O projeto considera uma limitação importante do dataset: a partir de 2008, parte relevante do mercado de jogos passou a envolver vendas digitais.
+
+Como o dataset registra principalmente vendas físicas, o aplicativo separa os dados em dois períodos:
+
+- até 2007: base principal da inferência estatística;
+- 2008 em diante: possível sub-registro de vendas digitais.
+
+Essa separação evita conclusões incorretas, como afirmar que determinado jogo ou gênero vendeu menos apenas porque parte das vendas digitais não aparece na base.
+
+---
+
+## Teste estatístico utilizado
+
+O projeto utiliza ANOVA de dois fatores para avaliar se há diferenças estatisticamente relevantes nas vendas considerando:
+
+- gênero do jogo;
+- região de venda;
+- interação entre gênero e região.
+
+O modelo utilizado é:
+
+```text
+log(1 + vendas) ~ gênero + região + gênero × região
